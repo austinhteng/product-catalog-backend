@@ -22,7 +22,8 @@ namespace Product_Catalog.Controllers
 
         //[Route("api/GetProducts")]
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Policy = "North America")]
         //[Authorize(Roles = "admin")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> Get()
         {
@@ -47,8 +48,8 @@ namespace Product_Catalog.Controllers
         }
 
         [HttpPost("PostProduct")]
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         public async Task<ActionResult> PostProduct([FromBody] ProductDto productDto)
         {
             //if model state is valid
@@ -62,8 +63,8 @@ namespace Product_Catalog.Controllers
         }
 
         [HttpPut("ToggleActive/{productId:int}")]
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         public async Task<ActionResult> ToggleActiveAsync([FromRoute] int productId)
         {
             if (await _productService.ToggleActiveAsync(productId))

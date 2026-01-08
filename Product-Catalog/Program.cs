@@ -30,6 +30,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddAuthorization(options =>
+{
+//options.AddPolicy("Region", policy =>
+//    policy.Requirements.Add());
+options.AddPolicy("North America", policy =>
+    policy.RequireClaim("Country", "Canada", "United States", "Mexico"));
+});
+
+
 // Add services to the container.
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddControllers();
